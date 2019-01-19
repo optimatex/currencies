@@ -22,7 +22,6 @@ export const getCurrencies = (params = {}) => async (dispatch, getState) => {
       }
     });
   } catch (error) {
-    console.log("%c error", "color: #0087d4", error);
     await dispatch({
       type: types.GET_CURRENCIES_ERROR,
       payload: {
