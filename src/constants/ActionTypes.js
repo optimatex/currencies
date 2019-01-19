@@ -1,12 +1,3 @@
-// ActionTypes are defined in constants.
-
-// They are imported in Actions and Reducers.
-// This prevents errors if they are misspelled over here.
-
-/* eslint-disable */
-
-export const INCREMENT_NUM = "INCREMENT_NUM";
-export const DECREMENT_NUM = "DECREMENT_NUM";
-export const RESET = "RESET";
-
-/* eslint-enable */
+export const GET_CURRENCIES_REQUEST = "GET_CURRENCIES_REQUEST";
+export const GET_CURRENCIES_SUCCESS = "GET_CURRENCIES_SUCCESS";
+export const GET_CURRENCIES_ERROR = "GET_CURRENCIES_ERROR";

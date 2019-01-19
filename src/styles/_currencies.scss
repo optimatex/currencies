@@ -1,0 +1,26 @@
+
+.currencies__title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: rgba($font-color--base, .7);
+}
+
+.currencies__list {
+  display: block;
+}
+
+.currencies__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.currencies__key {
+  font-size: 20px;
+}
+
+.currencies__value {
+  font-size: 18px;
+}

@@ -1,6 +1,13 @@
-import { createStore } from "redux";
-import reducer from "./reducers"; // Gets the State from the reducer(s)
+import { combineReducers, applyMiddleware, createStore, compose } from "redux";
+import thunk from "redux-thunk";
 
-let store = createStore(reducer); // Creates the store from the State received from the reducer(s)
+import reducer from "./reducers";
+console.log("%c process.env.NODE_ENV", "color: #0087d4", process.env.NODE_ENV);
+const composeEnhancers =
+  process.env.NODE_ENV === "development"
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    : compose;
+
+let store = createStore(reducer, {}, composeEnhancers(applyMiddleware(thunk)));
 
 export default store;

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import Counter from "./containers/Counter";
+import Currencies from "./containers/Currencies";
 
 class App extends Component {
   render() {
     return (
-      <Counter />
+      <div className="app_container">
+        <Currencies />
+      </div>
     );
   }
 }
