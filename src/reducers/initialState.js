@@ -1,11 +1,15 @@
+import { baseSymbols } from "../constants/Symbols";
+
 const initialState = {
   list: {
     isLoading: false,
     error: "",
     data: {
-      items: [],
+      items: {},
       count: 0
-    }
+    },
+    symbols: baseSymbols,
+    isFullCurrencies: false
   }
 };
 

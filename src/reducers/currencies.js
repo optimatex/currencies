@@ -1,4 +1,5 @@
 import * as types from "../constants/ActionTypes";
+import { baseSymbols, moreSymbols } from "../constants/Symbols";
 import initialState from "./initialState";
 
 export default function reducer(state = initialState, action) {
@@ -22,6 +23,15 @@ export default function reducer(state = initialState, action) {
             items: action.payload.items,
             count: action.payload.count
           }
+        }
+      };
+    case types.SHOW_FULL_CURRENCIES:
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          isFullCurrencies: true,
+          symbols: `${baseSymbols},${moreSymbols}`
         }
       };
   }

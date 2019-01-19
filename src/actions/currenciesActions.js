@@ -1,6 +1,6 @@
 import * as api from "./api";
 import * as types from "../constants/ActionTypes";
-// import * as selectors from "./selectors";
+import { getSymbols } from "../selectors/currencies";
 
 /*
   Get currencies
@@ -11,8 +11,10 @@ export const getCurrencies = (params = {}) => async (dispatch, getState) => {
       type: types.GET_CURRENCIES_REQUEST
     });
 
-    const { data } = await api.getCurrenciesRequest();
-    console.log("%c data", "color: #0087d4", data);
+    const symbols = getSymbols(getState());
+
+    const { data } = await api.getCurrenciesRequest(symbols);
+
     await dispatch({
       type: types.GET_CURRENCIES_SUCCESS,
       payload: {
@@ -29,3 +31,7 @@ export const getCurrencies = (params = {}) => async (dispatch, getState) => {
     });
   }
 };
+
+export const showAllCurrencies = () => ({
+  type: types.SHOW_FULL_CURRENCIES
+});

@@ -2,7 +2,7 @@ import { combineReducers, applyMiddleware, createStore, compose } from "redux";
 import thunk from "redux-thunk";
 
 import reducer from "./reducers";
-console.log("%c process.env.NODE_ENV", "color: #0087d4", process.env.NODE_ENV);
+
 const composeEnhancers =
   process.env.NODE_ENV === "development"
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

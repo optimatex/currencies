@@ -3,39 +3,88 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { getCurrencies } from "../actions/currenciesActions";
-import { getCurrenciesList } from "../selectors/currencies";
+import { getCurrencies, showAllCurrencies } from "../actions/currenciesActions";
+import {
+  getCurrenciesList,
+  getIsLoadingList,
+  getIsFullCurrencies
+} from "../selectors/currencies";
+import Spinner from "../components/Spinner";
 import CurrenciesList from "../components/CurrenciesList";
 
 class Currencies extends Component {
   static propTypes = {
-    items: PropTypes.shape({}),
-    getCurrencies: PropTypes.func
+    items: PropTypes.shape({}).isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    isFullCurrencies: PropTypes.bool.isRequired,
+    getCurrencies: PropTypes.func.isRequired,
+    showAllCurrencies: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     this.props.getCurrencies();
+    this.authUpdate();
   }
 
+  componentWillUnmount() {
+    clearInterval(this.authUpdate);
+  }
+
+  // launch autoupdate data every 10 sec.
+  authUpdate() {
+    this.autoUpdate = setInterval(this.props.getCurrencies, 10 * 1000);
+  }
+
+  handleUpdateCurrencies = () => {
+    this.props.getCurrencies();
+  };
+
+  handleShowMore = () => {
+    this.props.showAllCurrencies();
+    this.props.getCurrencies();
+  };
+
   render() {
-    const { items } = this.props;
-    console.log("%c items", "color: #0087d4", items);
+    const { items, isLoading, isFullCurrencies } = this.props;
+
     return (
       <div className="currencies">
-        <h1 className="currencies__title">Currencies dashboard</h1>
+        <div className="currencies__head">
+          <h1 className="currencies__title">Currencies</h1>
 
-        <CurrenciesList items={items} />
+          <button
+            className="currencies__refresh-btn"
+            onClick={this.handleUpdateCurrencies}
+          >
+            <i className="fas fa-sync-alt" />
+          </button>
+        </div>
+
+        {isLoading ? <Spinner /> : <CurrenciesList items={items} />}
+
+        {!isFullCurrencies && (
+          <button
+            className="currencies__more-btn"
+            onClick={this.handleShowMore}
+          >
+            <i className="far fa-plus-square" />
+            show more
+          </button>
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  items: getCurrenciesList(state)
+  items: getCurrenciesList(state),
+  isLoading: getIsLoadingList(state),
+  isFullCurrencies: getIsFullCurrencies(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  getCurrencies: bindActionCreators(getCurrencies, dispatch)
+  getCurrencies: bindActionCreators(getCurrencies, dispatch),
+  showAllCurrencies: bindActionCreators(showAllCurrencies, dispatch)
 });
 
 export default connect(
