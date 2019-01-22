@@ -23,25 +23,37 @@ class Currencies extends Component {
 
   componentDidMount() {
     this.props.getCurrencies();
-    this.authUpdate();
+    this.startUpdateInterval();
   }
 
   componentWillUnmount() {
-    clearInterval(this.authUpdate);
+    this.stopUpdateInterval();
   }
 
   // launch autoupdate data every 10 sec.
-  authUpdate() {
-    this.autoUpdate = setInterval(this.props.getCurrencies, 10 * 1000);
-  }
+  startUpdateInterval = () => {
+    this.updateIntetrval = setInterval(this.props.getCurrencies, 10 * 1000);
+  };
+
+  stopUpdateInterval = () => {
+    clearInterval(this.updateIntetrval);
+  };
+
+  // clear current interval and start new
+  restartUpdateInterval = () => {
+    this.stopUpdateInterval();
+    this.startUpdateInterval();
+  };
 
   handleUpdateCurrencies = () => {
     this.props.getCurrencies();
+    this.restartUpdateInterval();
   };
 
   handleShowMore = () => {
     this.props.showAllCurrencies();
     this.props.getCurrencies();
+    this.restartUpdateInterval();
   };
 
   render() {
