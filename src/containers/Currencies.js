@@ -22,13 +22,17 @@ class Currencies extends Component {
   };
 
   componentDidMount() {
-    this.props.getCurrencies();
-    this.startUpdateInterval();
+    this.initialUpdate();
   }
 
   componentWillUnmount() {
     this.stopUpdateInterval();
   }
+
+  initialUpdate = async () => {
+    await this.props.getCurrencies();
+    this.startUpdateInterval();
+  };
 
   // launch autoupdate data every 10 sec.
   startUpdateInterval = () => {

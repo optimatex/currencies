@@ -8,7 +8,9 @@ const CurrenciesList = props => {
         <div className="currencies__item" key={key}>
           <span className="currencies__key">{key}</span>
 
-          <span className="currencies__value">{props.items[key]}</span>
+          <span className="currencies__value">
+            {props.items[key]} <span className="currencies__sub">RUB</span>
+          </span>
         </div>
       ))}
     </div>

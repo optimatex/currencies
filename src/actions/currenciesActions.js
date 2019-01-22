@@ -1,6 +1,7 @@
 import * as api from "./api";
 import * as types from "../constants/ActionTypes";
 import { getSymbols } from "../selectors/currencies";
+import convertToRub from "../utils/convertToRub";
 
 /*
   Get currencies
@@ -15,10 +16,13 @@ export const getCurrencies = (params = {}) => async (dispatch, getState) => {
 
     const { data } = await api.getCurrenciesRequest(symbols);
 
+    // trabnsformation of the currencies. Comment is in the func
+    const transformed = convertToRub(data.rates);
+
     await dispatch({
       type: types.GET_CURRENCIES_SUCCESS,
       payload: {
-        items: data.rates
+        items: transformed
       }
     });
   } catch (error) {
